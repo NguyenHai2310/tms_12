@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213043829) do
+ActiveRecord::Schema.define(version: 20150302033043) do
 
   create_table "course_subjects", force: :cascade do |t|
     t.integer  "course_id",  limit: 4
@@ -26,16 +26,31 @@ ActiveRecord::Schema.define(version: 20150213043829) do
   create_table "courses", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "content",    limit: 255
+    t.datetime "start_at"
+    t.datetime "finish_at"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
+  create_table "enrollment_subjects", force: :cascade do |t|
+    t.integer  "user_id",    limit: 4
+    t.integer  "course_id",  limit: 4
+    t.integer  "subject_id", limit: 4
+    t.integer  "status",     limit: 4, default: 0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "enrollment_subjects", ["course_id"], name: "index_enrollment_subjects_on_course_id", using: :btree
+  add_index "enrollment_subjects", ["subject_id"], name: "index_enrollment_subjects_on_subject_id", using: :btree
+  add_index "enrollment_subjects", ["user_id"], name: "index_enrollment_subjects_on_user_id", using: :btree
+
   create_table "enrollments", force: :cascade do |t|
     t.integer  "user_id",    limit: 4
     t.integer  "course_id",  limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.integer  "status",     limit: 4
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.integer  "status",     limit: 4, default: 0
   end
 
   add_index "enrollments", ["course_id"], name: "index_enrollments_on_course_id", using: :btree
@@ -44,6 +59,8 @@ ActiveRecord::Schema.define(version: 20150213043829) do
   create_table "subjects", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "content",    limit: 255
+    t.datetime "start_at"
+    t.datetime "finish_at"
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -64,7 +81,7 @@ ActiveRecord::Schema.define(version: 20150213043829) do
     t.datetime "updated_at"
     t.string   "password_digest", limit: 255
     t.string   "remember_digest", limit: 255
-    t.boolean  "admin",           limit: 1
+    t.boolean  "admin",           limit: 1,   default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

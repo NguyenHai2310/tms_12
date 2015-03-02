@@ -4,11 +4,50 @@
   <%= h @course.name %><br>
   <strong>Content:</strong>
   <%= @course.content %>
+  <br>
+  <% if @course.enrollments.count != 0 && @course.subjects.count != 0 %>
+    <div class="col-md-2">
+      <% if @course.start_at.nil? %>
+        <div>
+          <%= form_for [:admin,@course] do |f| %>
+            <div><%= f.hidden_field :start_at, value: Time.zone.now %></div>
+            <%= f.submit "Start", class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      <% else %>
+        <% if @course.finish_at.nil? %>
+          <div>
+            <%= form_for [:admin,@course] do |ff| %>
+              <div><%= ff.hidden_field :finish_at, value: Time.zone.now %></div>
+              <%= ff.submit "Finish", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+  <%= link_to "Edit", edit_admin_course_path(@course), class:'btn btn-success' %>
+  <%= link_to "add user", admin_course_assign_path(@course), class:'btn btn-success' %>
+</p>
+<br>
+<p>
+  <strong>Start:</strong>
+  <%= @course.start_at %>
+</p>
+
+<p>
+  <strong>Finish:</strong>
+  <%= @course.finish_at %>
 </p>
 <aside class= "col-md-4">
   <ol>
     <% @course.subjects.each do |subject| %>
       <li><%= link_to subject.name, admin_subject_path(subject) %></li>
+      <ul>
+        <% subject.tasks.each do |task| %>
+          <li><%= task.name %></li>
+        <% end %>
+      </ul>
     <% end %>
   </ol>
 </aside>
@@ -17,6 +56,5 @@
     <% @course.users.each do |user| %>
       <li><%= link_to user.name, admin_user_path(user) %></li>
     <% end %>
-  </ol>
-  <%= link_to "add user", admin_course_assign_path(@course), class:'btn btn-success' %>
+  </ol> 
 </div>

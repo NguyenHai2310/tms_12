@@ -6,6 +6,14 @@
   <strong>Content:</strong>
   <%= @course.content %>
 </p>
+<p>
+  <strong>Start:</strong>
+  <%= @course.start_at %>
+</p>
+<p>
+  <strong>Finish:</strong>
+  <%= @course.finish_at %>
+</p>
 <aside class= "col-md-4">
   <ol>
     <% @course.subjects.each do |subject| %>
@@ -19,4 +27,4 @@
       <li><%= link_to user.name, user_path(user) %></li>
     <% end %>
   </ol>
- </div>
+</div>

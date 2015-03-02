@@ -1,5 +1,5 @@
 class AddStatusToEnrollments < ActiveRecord::Migration
   def change
-    add_column :enrollments, :status, :integer
+    add_column :enrollments, :status, :integer, default: 0
   end
 end

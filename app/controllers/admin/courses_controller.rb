@@ -8,6 +8,8 @@ class Admin::CoursesController < ApplicationController
 
   def show
     @course = Course.find params[:id]
+    @subjects  = @course.subjects
+    @users = @course.users
   end
 
   def create
@@ -26,9 +28,10 @@ class Admin::CoursesController < ApplicationController
 
   def update
     @course = Course.find params[:id]
+    
     if @course.update_attributes course_params
       flash[:success] = "Updated course."
-      redirect_to admin_courses_url
+      redirect_to admin_course_path @course
     else
       render :edit
     end
@@ -46,7 +49,7 @@ class Admin::CoursesController < ApplicationController
 
   private
   def course_params
-    params.require(:course).permit(:name, :content, user_ids:[],
-      course_subjects_attributes: [:id, :subject_id, :_destroy])
+    params.require(:course).permit :name, :content, :start_at, :finish_at,
+     user_ids:[], course_subjects_attributes: [:id, :subject_id, :_destroy]
   end
 end

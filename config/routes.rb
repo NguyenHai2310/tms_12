@@ -11,13 +11,16 @@ Rails.application.routes.draw do
   resources :subjects
   resources :tasks
   resources :courses
+  resources :enrollment_subjects
 
   namespace :admin do
     resources :subjects
     resources :users
+    resources :enrollment_subjects
     resources :courses
+    resources :enrollment_subjects
     resources :courses do 
-      resources :enrollments
+      resource :enrollments
       get 'assign' => 'enrollments#new'
     end
   end

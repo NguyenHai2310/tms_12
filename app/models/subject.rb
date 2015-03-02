@@ -4,6 +4,7 @@ class Subject < ActiveRecord::Base
                              foreign_key: 'subject_id',
                              dependent: :destroy
   has_many :course, through: :course_subjects
+  has_many :enrollment_subject, dependent: :destroy
 
   accepts_nested_attributes_for :tasks, allow_destroy: true
 
