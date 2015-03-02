@@ -19,7 +19,7 @@ class Admin::SubjectsController < ApplicationController
     @subject = Subject.find params[:id]
     @subject.destroy
     flash[:success] = "Deleted"
-    redirect_to subjects_url
+    redirect_to admin_subjects_url
   end
 
   def edit
@@ -30,7 +30,7 @@ class Admin::SubjectsController < ApplicationController
     @subject = Subject.new subject_params
     if @subject.save
       flash[:success] = "Added new subject"
-      redirect_to @subject
+      redirect_to admin_subject_path(@subject)
     else
       flash[:danger] = "Fail!"
       render :new
@@ -41,7 +41,7 @@ class Admin::SubjectsController < ApplicationController
     @subject = Subject.find params[:id]
     if @subject.update_attributes subject_params
       flash[:success] = "Done!"
-      redirect_to @subject
+      redirect_to admin_subject_path(@subject)
     else
       flash[:danger] = "Fail!"
       render :edit  
@@ -50,6 +50,6 @@ class Admin::SubjectsController < ApplicationController
 
   private
   def subject_params
-    params.require(:subject).permit(:name, :content, tasks_attributes: [:name, :id, :_destroy])
+    params.require(:subject).permit :name, :content, tasks_attributes: [:name, :id, :_destroy]
   end
 end

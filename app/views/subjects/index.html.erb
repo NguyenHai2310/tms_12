@@ -5,11 +5,8 @@
   </tr>
   <% @subjects.each do |subject| %>
     <tr>
-      <td><%=h subject.name %>  </td>
-      <td><%= link_to "Show", subject %> |</td>
-      <td><%= link_to "Edit", edit_admin_subject_path(subject) %> |</td>
-      <td><%= link_to "Delete", subject, method: :delete, data: { confirm: "You sure?" }  %></td>
+      <td><%=h subject.name %> | </td>
+      <td><%= link_to "Show", subject %> </td>
     </tr>
   <% end %>
 </table>
-<p><%= link_to "Create New Subjetc", new_admin_subject_path %></p>

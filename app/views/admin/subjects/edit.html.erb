@@ -2,6 +2,6 @@
 <% title "Edit Subject" %>
 <%= render "subject" %>
 <p>
-  <%= link_to "Show", @subject %> |
-  <%= link_to "View All", subjects_path %>
+  <%= link_to "Show", admin_subject_path(@subject) %> |
+  <%= link_to "View All", admin_subjects_path %>
 </p>
